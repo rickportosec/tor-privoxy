@@ -1,0 +1,4 @@
+#!/bin/sh
+
+sh /etc/service/setup --passwd s3cret
+tor -f /etc/service/tor/torrc
