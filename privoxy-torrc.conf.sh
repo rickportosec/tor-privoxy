@@ -35,7 +35,7 @@ while [[ $# -gt 0 ]] do
       passwd="$2"
       hash=$(tor --hash-password "$passwd")
       sed -i '59 s/#HashedControlPassword .*/HashedControlPassword '"${hash}"'/' torrc
-      #sed -i '6 s/password=.*/password='"${passwd}"')/' newnym-rotacion.py
+      sed -i '6 s/password=.*/password='"${passwd}"')/' newnym-rotacion.py
       shift
       ;;
    esac
