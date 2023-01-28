@@ -1,5 +1,4 @@
 #!/bin/bash
-
 while [[ $# -gt 0 ]]
 do
 key="$1"
@@ -8,25 +7,37 @@ case $key in
 addr="$2"
 portion="${addr%..}"
 sed -i '385 s/^/# /' /etc/service/privoxy/config
+# actionsfile match-all.action
 sed -i '386 s/^/# /' /etc/service/privoxy/config
+# actionsfile default.action
 sed -i '387 s/^/# /' /etc/service/privoxy/config
-sed -i '794 s/./listen-address '"${addr}"':8118/' /etc/service/privoxy/config
-sed -i '1089 s#.# permit-access '"${portion}"'.0.0/16 #' /etc/service/privoxy/config
-sed -i '1456 s#.# forward-socks5t / '"${addr}"':9050 .#' /etc/service/privoxy/config
-sed -i '1467 s#.# forward '"${portion}"'../ .#' /etc/service/privoxy/config
-sed -i '18 s/./SocksPort '"${addr}"':9050/' /etc/service/tor/torrc
-sed -i '56 s/#//' /etc/service/tor/torrc
-sed -i '26 s/#//' /etc/service/tor/torrc
-sed -i '48 s/#//' /etc/service/tor/torrc
-sed -i '60 s/#//' /etc/service/tor/torrc
-sed -i '178 s/#//' /etc/service/tor/torrc
+# actionsfile user.action
+sed -i 's@listen-address  127.0.0.1:8118@listen-address '"${addr}"':8118@' /etc/service/privoxy/config
+# listen-address  127.0.0.1:8118
+sed -i 's@#        permit-access  192.168.45.64/26@        permit-access  '"${portion}"'.0.0/0 @' /etc/service/privoxy/config
+# #permit-access  192.168.45.64/24
+sed -i 's@#        forward-socks5t   /               127.0.0.1:9050 .@        forward-socks5t   /               '"${addr}"':9050 .@' /etc/service/privoxy/config
+# forward-socks5t   /               127.0.0.1:9050 .
+sed -i '1467 s@#        forward         127.*.*.*@       ./forward-socks5t / '"${addr}"':9050 .@' /etc/service/privoxy/config
+#        #forward         127.*.*.*/       .
+sed -i 's/#SocksPort 9050/SocksPort '"${addr}"':9050/' /etc/service/tor/torrc
+# #SocksPort 9050
+sed -i 's/#ControlPort 9051/ControlPort '"${addr}"':9051/' /etc/service/tor/torrc
+# #ControlPort 9051
+sed -i 's@#SocksPolicy accept@SocksPolicy accept '"${addr}"'/0@' /etc/service/tor/torrc
+# #SocksPolicy accept 192.168.0.0/16
+sed -i 's/#RunAsDaemon 1/RunAsDaemon 1/' /etc/service/tor/torrc
+# #RunAsDaemon 1
+sed -i 's/#CookieAuthentication 1/CookieAuthentication 1/' /etc/service/tor/torrc
+# # #CookieAuthentication 1
+
 shift
 ;;
 --passwd)
 passwd="$2"
-hash=$(tor --quiet --hash-password "$passwd")
-sed -i "59 s/#HashedControlPassword .*/HashedControlPassword "${hash}"/" /etc/service/tor/torrc
-sed -i '6 s/password=.*/password='"${passwd}"')/' /etc/service/newnym.py
+hash=$(tor --hash-password "$passwd" 2&>/dev/null)
+sed -i 's/#HashedControlPassword .*/HashedControlPassword '"${hash}"'/' /etc/service/tor/torrc
+sed -i 's/password=.*/password='"${passwd}"')/' /etc/service/newnym.py
 shift
 ;;
 esac
