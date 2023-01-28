@@ -17,7 +17,7 @@ while [[ $# -gt 0 ]] do
             1456 s#.# forward-socks5t / '"${addr}"':9050 .#
             1467 s#.# forward '"${portion}"'../ .#
 
-         }' config
+         }' /etc/privoxy/config
 
          sed -i '{
             18 s/./SocksPort '"${addr}"':9050/
@@ -26,7 +26,7 @@ while [[ $# -gt 0 ]] do
             48 s/#//
             60 s/#//
             178 s/#//
-         }' torrc
+         }' /etc/tor/torrc
 
          shift
          ;;
