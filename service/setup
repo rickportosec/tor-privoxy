@@ -18,7 +18,7 @@ sed -i 's@#        permit-access  192.168.45.64/26@        permit-access  '"${po
 # #permit-access  192.168.45.64/24
 sed -i 's@#        forward-socks5t   /               127.0.0.1:9050 .@        forward-socks5t   /               '"${addr}"':9050 .@' /etc/service/privoxy/config
 # forward-socks5t   /               127.0.0.1:9050 .
-sed -i '1467 s@#        forward         127.*.*.*@       ./forward-socks5t / '"${addr}"':9050 .@' /etc/service/privoxy/config
+sed -i 's@#        forward         127.*.*.*/       ./        forward         0.*.*.*/       .' /etc/service/privoxy/config
 #        #forward         127.*.*.*/       .
 sed -i 's/#SocksPort 9050/SocksPort '"${addr}"':9050/' /etc/service/tor/torrc
 # #SocksPort 9050
