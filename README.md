@@ -1,8 +1,5 @@
 ## tor-privoxy-rotating
 
-
-## tor+privoxy-rotating-proxy
-
 [tor] https://www.torproject.org/  
 [privoxy] https://www.privoxy.org/
 
