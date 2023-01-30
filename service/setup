@@ -5,7 +5,6 @@ key="$1"
 case $key in
 --address)
 addr="$2"
-portion="${addr%..}"
 sed -i '385 s/^/# /' /etc/service/privoxy/config
 # actionsfile match-all.action
 sed -i '386 s/^/# /' /etc/service/privoxy/config
