@@ -28,6 +28,8 @@ sed -i 's/#RunAsDaemon 1/RunAsDaemon 1/' /etc/service/tor/torrc
 # #RunAsDaemon 1
 sed -i 's/#CookieAuthentication 1/CookieAuthentication 1/' /etc/service/tor/torrc
 # # #CookieAuthentication 1
+sed -i 's/#ExitPolicy reject .*/ExitPolicy reject *:*/'
+#ExitPolicy reject *:* # no exits allowed
 
 shift
 ;;
