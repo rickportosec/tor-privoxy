@@ -18,11 +18,11 @@ sed -i 's@#        permit-access  192.168.45.64/26@        permit-access  '"${po
 # #permit-access  192.168.45.64/24
 sed -i 's@#        forward-socks5t   /               127.0.0.1:9050 .@        forward-socks5t   /               '"${addr}"':9050 .@' /etc/service/privoxy/config
 # forward-socks5t   /               127.0.0.1:9050 .
-sed -i 's/#SocksPort 9050/SocksPort '"${addr}"':9050/' /etc/service/tor/torrc
+sed -i 's/#SocksPort 9050 .*/SocksPort '"${addr}"':9050/' /etc/service/tor/torrc
 # #SocksPort 9050
 sed -i 's/#ControlPort 9051/ControlPort 9051/' /etc/service/tor/torrc
 # #ControlPort 9051
-sed -i 's@#SocksPolicy accept@SocksPolicy accept '"${addr}"'/0@' /etc/service/tor/torrc
+sed -i 's@#SocksPolicy accept .*@SocksPolicy accept '"${addr}"'/0@' /etc/service/tor/torrc
 # #SocksPolicy accept 192.168.0.0/16
 sed -i 's/#RunAsDaemon 1/RunAsDaemon 1/' /etc/service/tor/torrc
 # #RunAsDaemon 1
