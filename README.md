@@ -14,6 +14,6 @@
 
 `sh setup --address 0.0.0.0 ---passwd [password]`
 
-`curl --proxy 127.0.0.1:8118 https://check.torproject.org`
+`curl --silent -x http://172.17.0.1:8118 https://check.torproject.org/`
 
-`curl --silent -x http://localhost:8118/ https://check.torproject.org/ | grep -o "<p>.</p>" | sed 's/<[^>]>//g'`
+`curl --silent -x http://172.17.0.1:8118 https://check.torproject.org/ | grep '<strong>.*</strong>' `
