@@ -14,7 +14,7 @@ sed -i '387 s/^/# /' /etc/service/privoxy/config
 # actionsfile user.action
 sed -i 's@listen-address  127.0.0.1:8118@listen-address '"${addr}"':8118@' /etc/service/privoxy/config
 # listen-address  127.0.0.1:8118
-sed -i 's@#        permit-access  192.168.45.64/26@        permit-access  '"${portion}"'.0.0/0 @' /etc/service/privoxy/config
+sed -i 's@#        permit-access  192.168.45.64/26@        permit-access  '"${addr}"'/0 @' /etc/service/privoxy/config
 # #permit-access  192.168.45.64/24
 sed -i 's@#        forward-socks5t   /               127.0.0.1:9050 .@        forward-socks5t   /               '"${addr}"':9050 .@' /etc/service/privoxy/config
 # forward-socks5t   /               127.0.0.1:9050 .
@@ -35,7 +35,7 @@ shift
 ;;
 --passwd)
 passwd="$2"
-hash=$(tor --hash-password "$passwd" 2&>/dev/null)
+hash=$(tor --ignore-missing-torrc --hash-password "$passwd" 2&>/dev/null)
 sed -i 's/#HashedControlPassword .*/HashedControlPassword '"${hash}"'/' /etc/service/tor/torrc
 sed -i 's/password=.*/password='"${passwd}"')/' /etc/service/newnym.py
 shift
