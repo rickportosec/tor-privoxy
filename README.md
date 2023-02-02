@@ -9,7 +9,7 @@ docker run -d -p 8118:8118 -p 9050:9050 -p 9051:9051 tor-privoxy-rotating:latest
 ```                                                                                        
 ! CHANGE PASSWORD
 ```
-tor-privoxy-rotating/service/tor/run sh /etc/service/setup --passwd s3cret
+/etc/service/tor/run sh /etc/service/setup --passwd s3cret
 ```
 
 `newnym`
