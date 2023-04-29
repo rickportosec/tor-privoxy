@@ -29,19 +29,14 @@ sed -i 's/#CookieAuthentication 1/CookieAuthentication 1/' /etc/service/tor/torr
 # # #CookieAuthentication 1
 sed -i 's/#ExitPolicy reject .*/ExitPolicy reject *:*/'
 #ExitPolicy reject *:* # no exits allowed
-
-shift
 ;;
 --passwd)
 passwd="$2"
 hash=$(tor --hash-password "$passwd" | grep '16:' | cut -d ' ' -f 4)
 sed -i 's/#HashedControlPassword .*/HashedControlPassword '"${hash}"'/' /etc/service/tor/torrc
 sed -i "s/password=.*/password='${passwd}')/" /etc/service/newnym.py
-shift
 ;;
 esac
 shift
 done
-if [[ -z "$addr" ]] && [[ -z "$passwd" ]]; then
-echo "How to use:'"
-fi
+
